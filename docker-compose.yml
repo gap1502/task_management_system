@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+
+  server:
+    build: ./
+    container_name: 'task_system-backend'
+    ports:
+      - "9000:9000"
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+
+
+
+  database:
+    image: postgres:11-alpine
+    container_name: 'postgresql'
+    volumes:
+      - /postgresql:/var/lib/postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
